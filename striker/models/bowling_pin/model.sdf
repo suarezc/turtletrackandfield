@@ -1,0 +1,47 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="bowling_pin">
+    <static>false</static>
+    <link name="pin">
+      <!-- this controls the pins position -->
+      <pose>0 0 .2 0 0 0</pose>
+
+      <!-- this is the sphere that collision runs against -->
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.4</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <!-- this is the sphere that is rendered -->
+      <visual name='visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.4</length>
+          </cylinder>
+        </geometry>
+      </visual> 
+
+      <!-- this controls physics properties (mass, moment of inertia) -->
+      <inertial>
+        <!-- position center of mass slightly higher to make it easier to tip over -->
+        <pose>0 0 0.04 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <!-- these two moments of inertia are lower so the pins
+                will tip more easily -->
+          <ixx>0.00003</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00003</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+    </link>
+  </model>
+</sdf>

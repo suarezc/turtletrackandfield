@@ -1,0 +1,41 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="bowling_ball">
+    <static>false</static>
+    <link name="ball">
+      <!-- this controls the balls position -->
+      <pose>0 0 .1 0 0 0</pose>
+
+      <!-- this is the sphere that collision runs against -->
+      <collision name='collision'>
+        <geometry>
+          <sphere>
+            <radius>.1</radius>
+          </sphere>
+        </geometry>
+      </collision>
+
+      <!-- this is the sphere that is rendered -->
+      <visual name='visual'>
+        <geometry>
+          <sphere>
+            <radius>.1</radius>
+          </sphere>
+        </geometry>
+      </visual> 
+
+      <!-- this controls physics properties (mass, moment of inertia) -->
+      <inertial>
+        <mass>0.2</mass>
+        <inertia>
+          <ixx>0.00004</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00004</iyy>
+          <iyz>0</iyz>
+          <izz>0.00004</izz>
+        </inertia>
+      </inertial>
+    </link>
+  </model>
+</sdf>
