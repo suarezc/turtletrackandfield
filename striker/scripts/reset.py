@@ -5,12 +5,12 @@ from geometry_msgs.msg import Pose, Twist, Point, Quaternion, Vector3
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 
 
-class GaezboTools:
+class GazeboTools:
 
   def __init__(self):
     rospy.init_node("reset_world")
 
-    self.set_model_state = rospy.Publisher("/gazebo/set_model_states", ModelState, queue_size=10)
+    self.set_model_state = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=10)
 
     self.pins = {
           "pin1": [3, 0, 0],
@@ -32,7 +32,7 @@ class GaezboTools:
     pass
 
   def reset_world(self):
-    q_list = quaternion_from_euler(1.5708, 0, 0)
+    q_list = quaternion_from_euler(0, 0, 0)
     q = Quaternion
     q.x = q_list[0]
     q.y = q_list[1]
@@ -43,5 +43,14 @@ class GaezboTools:
       p = Pose(position=Point(x=self.pins[pin][0], y=self.pins[pin][1], z=self.pins[pin][2]), orientation=q)
 
       t = Twist(linear=Vector3(0,0,0), angular=Vector3(0,0,0))
-      model_state = ModelState(name=pin, pose=p, twist=t)
+      model_state = ModelState(model_name=pin, pose=p, twist=t)
+      model_state.reference_frame = "world"
       self.set_model_state.publish(model_state)
+
+  def actually_reset_world(self):
+    """
+    idk why but this works and the other doesn't
+    """
+
+    for i in range(20):
+      self.reset_world()
