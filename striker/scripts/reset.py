@@ -37,17 +37,22 @@ class GazeboTools(object):
       self.current_numbered_blocks_locations = {}
     for pin_name,pose in self.pins.items():
       block_idx = data.name.index(pin_name)
-      self.current_numbered_blocks_locations[pin_name] = data.pose[block_idx].orientation
-      theta = self.current_numbered_blocks_locations[pin_name]
+      self.current_numbered_blocks_locations[pin_name] = data.pose[block_idx].orientation, data.pose[block_idx].position 
+      theta , pos = self.current_numbered_blocks_locations[pin_name]
       yaw = (euler_from_quaternion([
             theta.x,
             theta.y,
             theta.z,
             theta.w])
             [2])
-      print(yaw)
+      print("yaw", yaw)
+      print("\n")
+      print("pos", pos)
+      print("\n")
+      break
     print("____________")
     rospy.sleep(2)
+    
       #if z > 0.3:
         #self.reward += 1
     
