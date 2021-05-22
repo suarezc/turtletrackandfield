@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rospy
 from gazebo_msgs.msg import ModelState, ModelStates
 from geometry_msgs.msg import Pose, Twist, Point, Quaternion, Vector3
@@ -7,7 +8,7 @@ from tf.transformations import quaternion_from_euler, euler_from_quaternion
 class GazeboTools(object):
 
   def __init__(self):
-
+    self.initialized = False
     rospy.init_node("reset_world")
 
     self.set_model_state = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=60)
@@ -29,12 +30,15 @@ class GazeboTools(object):
         }
     self.pin_states = {}
     self.current_numbered_blocks_locations = None
-    self.reward = 0 
+    self.reward = 0
     self.reset_clock_running = False
     self.please_reset = False
 
+    self.initialized = True
+
   def model_states_received(self, data):
-    print(rospy.Time.now().to_sec())
+    print("got model states")
+    #print(rospy.Time.now().to_sec())
     for pin_name, pose in self.pins.items():
       if not pin_name.startswith("pin"):
         continue
@@ -52,7 +56,7 @@ class GazeboTools(object):
       if self.pin_states[pin]:
         reward += 1
     self.reward = reward
-    print(self.reward, self.reset_clock_running, rospy.Time.now().to_sec())
+    #print(self.reward, self.reset_clock_running, rospy.Time.now().to_sec())
     if self.reward > 0:
       if self.reset_clock_running:
         t1 = rospy.Time.now().to_sec()
@@ -64,11 +68,11 @@ class GazeboTools(object):
           # self.model_state_sub.unregister()
           # rospy.sleep(1)
           # self.model_state_sub = rospy.Subscriber("gazebo/model_states", ModelStates, self.model_states_received)
-           
+
       else:
         self.t0 = rospy.Time.now().to_sec()
         self.reset_clock_running = True
-      
+
 
   def reset_world(self):
     q_list = quaternion_from_euler(0, 0, 0)
@@ -79,6 +83,7 @@ class GazeboTools(object):
     q.w = q_list[3]
 
     for pin in self.pins:
+      print("resetting pin")
       rospy.sleep(0.01)
       p = Pose(position=Point(x=self.pins[pin][0], y=self.pins[pin][1], z=self.pins[pin][2]), orientation=q)
 
@@ -87,26 +92,35 @@ class GazeboTools(object):
       model_state.reference_frame = "world"
       self.set_model_state.publish(model_state)
 
-  def actually_reset_world(self):
-    """
-    idk why but this works and the other doesn't
-    """
+  # def actually_reset_world(self):
+  #   """
+  #   idk why but this works and the other doesn't
+  #   """
+  #
+  #   for i in range(20):
+  #     if i == 0:
+  #         print("looped")
+  #     self.reset_world()
 
-    for i in range(20):
-      self.reset_world()
-
-  def run(self):
+  def run(self, ball_start_state=None):
+    print("starting run")
+    rospy.sleep(1)
+    if ball_start_state is not None and self.initialized:
+        self.set_model_state.publish(ball_start_state)
+        print("velocity set")
     r = rospy.Rate(5)
     while not rospy.is_shutdown():
+      print('still in run')
       if self.please_reset:
-        self.reset_world()
-        print("done resetting!")
+        print("time to reset")
         self.please_reset = False
+        self.reset_world()
+        print("done resetting! reward is " + str(self.reward))
+        return self.reward
       r.sleep()
-      print("hi")
+      #print("hi")
 
 if __name__=="__main__":
-
+    print("started main")
     node = GazeboTools()
     node.run()
-    
