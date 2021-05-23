@@ -7,40 +7,44 @@ from tf.transformations import quaternion_from_euler, euler_from_quaternion
 
 class GazeboTools(object):
 
-  def __init__(self):
+  def __init__(self, lane_number):
+    self.lane = lane_number
     self.initialized = False
     rospy.init_node("reset_world")
 
-    self.set_model_state = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=60)
+    self.set_model_state = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=1000)
     self.model_state_sub = rospy.Subscriber("/gazebo/model_states", ModelStates, self.model_states_received)
 
+    y_offset = 2 * self.lane
+  
     self.pins = {
-          "pin1": [3, 0, 0],
-          "pin2": [3.1732, -0.1, 0],
-          "pin3": [3.1732, 0.1, 0],
-          "pin4": [3.346, -0.2, 0],
-          "pin5": [3.346, 0, 0],
-          "pin6": [3.346, 0.2, 0],
-          "pin7": [3.520, -0.3, 0],
-          "pin8": [3.520, -0.1, 0],
-          "pin9": [3.520, 0.1, 0],
-          "pin10": [3.520, 0.3, 0],
-          "ball": [1, 0, 0],
-          "turtlebot3_waffle_pi": [0, 0, 0]
+          f"lane_{self.lane}_pin1": [3, y_offset, 0],
+          f"lane_{self.lane}_pin2": [3.1732, -0.1+y_offset, 0],
+          f"lane_{self.lane}_pin3": [3.1732, 0.1+y_offset, 0],
+          f"lane_{self.lane}_pin4": [3.346, -0.2+y_offset, 0],
+          f"lane_{self.lane}_pin5": [3.346, y_offset, 0],
+          f"lane_{self.lane}_pin6": [3.346, 0.2+y_offset, 0],
+          f"lane_{self.lane}_pin7": [3.520, -0.3+y_offset, 0],
+          f"lane_{self.lane}_pin8": [3.520, -0.1+y_offset, 0],
+          f"lane_{self.lane}_pin9": [3.520, 0.1+y_offset, 0],
+          f"lane_{self.lane}_pin10": [3.520, 0.3+y_offset, 0],
+          f"lane_{self.lane}_ball": [1, 0+y_offset, 0],
+          f"lane_{self.lane}_robot": [0, y_offset, 0]
         }
     self.pin_states = {}
     self.current_numbered_blocks_locations = None
     self.reward = 0
     self.reset_clock_running = False
     self.please_reset = False
-
+    rospy.sleep(1)
+  
     self.initialized = True
 
   def model_states_received(self, data):
     print("got model states")
     #print(rospy.Time.now().to_sec())
     for pin_name, pose in self.pins.items():
-      if not pin_name.startswith("pin"):
+      if not "pin" in pin_name:
         continue
       block_idx = data.name.index(pin_name)
       theta = data.pose[block_idx].orientation
@@ -70,6 +74,7 @@ class GazeboTools(object):
           # self.model_state_sub = rospy.Subscriber("gazebo/model_states", ModelStates, self.model_states_received)
 
       else:
+        print("reset clock started")
         self.t0 = rospy.Time.now().to_sec()
         self.reset_clock_running = True
 
@@ -92,16 +97,6 @@ class GazeboTools(object):
       model_state.reference_frame = "world"
       self.set_model_state.publish(model_state)
 
-  # def actually_reset_world(self):
-  #   """
-  #   idk why but this works and the other doesn't
-  #   """
-  #
-  #   for i in range(20):
-  #     if i == 0:
-  #         print("looped")
-  #     self.reset_world()
-
   def run(self, ball_start_state=None):
     print("starting run")
     rospy.sleep(1)
@@ -122,5 +117,5 @@ class GazeboTools(object):
 
 if __name__=="__main__":
     print("started main")
-    node = GazeboTools()
+    node = GazeboTools(1)
     node.run()

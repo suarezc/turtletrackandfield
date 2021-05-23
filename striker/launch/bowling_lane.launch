@@ -7,7 +7,7 @@
 
   <env name="GAZEBO_MODEL_PATH" value="$GAZEBO_MODEL_PATH:$(find striker)/models"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find striker)/worlds/bowling_lane.world"/>
+    <arg name="world_name" value="$(find striker)/worlds/three_lane.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -15,7 +15,24 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+  <group ns="robot0">
+    <param name="tf_prefix" value="robot0_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
-  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model turtlebot3_$(arg model) -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
-</launch>
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_0_robot -x $(arg x_pos) -y 0 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot1">
+    <param name="tf_prefix" value="robot1_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_1_robot -x $(arg x_pos) -y 2 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot2">
+    <param name="tf_prefix" value="robot2_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_2_robot -x $(arg x_pos) -y 4 -z $(arg z_pos) -param robot_description" />
+  </group>
+  </launch>

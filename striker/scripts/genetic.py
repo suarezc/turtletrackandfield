@@ -68,17 +68,17 @@ class Genetic(object):
         for i in range(self.per_gen):
             current_chrom = self.chroms[i]
             print("chrom " + str(i)+ " is "+str(self.chroms[i]))
-            node = GazeboTools()
             reward = 0
 
 
-            ball = node.pins['ball']
+            ball = [1, 0, 0]
             rospy.sleep(0.01)
-            p = Pose(position=Point(x=node.pins['ball'][0], y=node.pins['ball'][1], z=node.pins['ball'][2]), orientation=q)
+            p = Pose(position=Point(x=ball[0], y=ball[1], z=ball[2]), orientation=q)
             t = Twist(linear=Vector3(current_chrom[0]*0.2*0.2,0,0), angular=Vector3(0,0,0))
             model_state = ModelState(model_name='ball', pose=p, twist=t)
             model_state.reference_frame = "world"
             print("calling run")
+            node = GazeboTools()
             reward = node.run(model_state)
             rospy.sleep(5)
 

@@ -10,7 +10,7 @@ import sys
 path_prefix = os.path.dirname(__file__) + "/action_states/"
 
 class Striker(object):
-    def __init__(self):
+    def __init__(self, lane_number=0):
         rospy.init_node("movement")
         self.initialized = False
 
@@ -18,7 +18,7 @@ class Striker(object):
 
         # Set up subscribers and publishers
         self.lidar_sub = rospy.Subscriber('scan', LaserScan, self.lidar_callback)
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel',
+        self.cmd_vel_pub = rospy.Publisher(f'/robot{lane_number}/cmd_vel',
                 Twist, queue_size=1)
 
         self.front_distance = 4
