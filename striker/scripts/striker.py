@@ -11,7 +11,7 @@ path_prefix = os.path.dirname(__file__) + "/action_states/"
 
 class Striker(object):
     def __init__(self, lane_number=0):
-        rospy.init_node("movement")
+        # rospy.init_node("movement")
         self.initialized = False
 
         self.state = ""
@@ -40,6 +40,7 @@ class Striker(object):
         """
         Really basic bowling behavior, with speed and time
         """
+        print("bowling", v, t)
         self.set_velocity(v, 0)
         rospy.sleep(t)
         self.stop()

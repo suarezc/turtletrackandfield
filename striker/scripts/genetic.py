@@ -59,7 +59,7 @@ class Genetic(object):
 
     def test_gen(self):
         q_list = quaternion_from_euler(0, 0, 0)
-        q = Quaternion
+        q = Quaternion()
         q.x = q_list[0]
         q.y = q_list[1]
         q.z = q_list[2]
@@ -75,18 +75,17 @@ class Genetic(object):
             rospy.sleep(0.01)
             p = Pose(position=Point(x=ball[0], y=ball[1], z=ball[2]), orientation=q)
             t = Twist(linear=Vector3(current_chrom[0]*0.2*0.2,0,0), angular=Vector3(0,0,0))
-            model_state = ModelState(model_name='ball', pose=p, twist=t)
+            model_state = ModelState(model_name='lane_0_ball', pose=p, twist=t)
             model_state.reference_frame = "world"
             print("calling run")
-            node = GazeboTools()
-            reward = node.run(model_state)
-            rospy.sleep(5)
+            node = GazeboTools(0)
+            parameters = {
+              "robot_speed": current_chrom[0]*0.2*0.2,
+              "robot_time": current_chrom[1]*0.2*0.2
+            }
+            reward = node.run(parameters)
+            rospy.sleep(0.5)
 
-            r = rospy.Rate(5)
-            while reward == 0:
-                print("waiting")
-                rospy.wait_for_message("/gazebo/set_model_state", ModelState, None)
-            print(reward)
             print("fininshed chrom " + str(i))
 
     def run(self):
@@ -103,5 +102,6 @@ class Genetic(object):
 
 
 if __name__ == "__main__":
+    rospy.init_node("genetic")
     gen = Genetic()
     gen.run()
