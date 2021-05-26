@@ -21,7 +21,7 @@ template_end = "</launch>"
 
 launch_file = template_start
 
-for i in range(3):
+for i in range(10):
   robot = f"""
   <group ns="robot{i}">
     <param name="tf_prefix" value="robot{i}_tf" />

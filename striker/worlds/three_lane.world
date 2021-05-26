@@ -274,6 +274,601 @@
       <uri>model://bowling_pin</uri>
       <name>lane_2_pin10</name>
     </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 6 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_3_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 6.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_3_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 5.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_3_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 6 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 5.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 6.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 5.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 6 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 6.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 5.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 5.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 6.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 6.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_3_pin10</name>
+    </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 8 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_4_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 8.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_4_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 7.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_4_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 7.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 8.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 7.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 8.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 7.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 7.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 8.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 8.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_4_pin10</name>
+    </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 10 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_5_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 10.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_5_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 9.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_5_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 10 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 9.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 10.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 9.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 10 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 10.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 9.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 9.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 10.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 10.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_5_pin10</name>
+    </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 12 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_6_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 12.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_6_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 11.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_6_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 12 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 11.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 12.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 11.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 12 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 12.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 11.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 11.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 12.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 12.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_6_pin10</name>
+    </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 14 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_7_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 14.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_7_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 13.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_7_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 14 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 13.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 14.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 13.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 14 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 14.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 13.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 13.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 14.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 14.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_7_pin10</name>
+    </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 16 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_8_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 16.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_8_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 15.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_8_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 16 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 15.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 16.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 15.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 16 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 16.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 15.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 15.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 16.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 16.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_8_pin10</name>
+    </include> 
+    <!-- Bowling ball -->
+    <include>
+      <pose> 1 18 0 0 0 0 </pose>
+      <uri>model://bowling_ball</uri>
+      <name>lane_9_ball</name>
+    </include>
+
+    <!-- Wall -->
+    <include>
+      <pose> 0 18.7 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_9_right_wall</name>
+    </include>
+
+    <include>
+      <pose> 0 17.3 0 0 0 0 </pose>
+      <uri>model://alley_wall</uri>
+      <name>lane_9_left_wall</name>
+    </include>
+
+
+    <!-- Bowling pins -->
+    <!-- First row -->
+    <include>
+      <pose> 3 18 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin1</name>
+    </include>
+
+    <!-- Second row -->
+    <include>
+      <pose> 3.1732 17.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin2</name>
+    </include>
+
+    <include>
+      <pose> 3.1732 18.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin3</name>
+    </include>
+
+    <!-- Third row -->
+    <include>
+      <pose> 3.346 17.8 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin4</name>
+    </include>
+
+    <include>
+      <pose> 3.346 18 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin5</name>
+    </include>
+  
+    <include>
+      <pose>3.346 18.2 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin6</name>
+    </include>
+
+    <!-- Fourth row -->
+    <include>
+      <pose>3.520 17.7 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin7</name>
+    </include>
+    
+    <include>
+      <pose>3.520 17.9 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin8</name>
+    </include>
+
+    <include>
+      <pose>3.520 18.1 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin9</name>
+    </include>
+
+    <include>
+      <pose>3.520 18.3 0 0 0 0 </pose>
+      <uri>model://bowling_pin</uri>
+      <name>lane_9_pin10</name>
+    </include> 
     <physics type="ode">
       <real_time_update_rate>1000.0</real_time_update_rate>
       <max_step_size>0.001</max_step_size>

@@ -11,6 +11,8 @@ import os
 import sys
 from reset import GazeboTools
 
+import concurrent.futures
+
 from random import random
 
 class Genetic(object):
@@ -57,36 +59,24 @@ class Genetic(object):
     def mutate(self):
         return
 
+    def run_chrom(self, chrom, lane):
+        node = GazeboTools(lane)
+        parameters = {
+          "robot_speed": chrom[0]*0.2*0.2,
+          "robot_time": chrom[1]
+        }
+        reward = node.run(parameters)
+        return reward, lane
+
     def test_gen(self):
-        q_list = quaternion_from_euler(0, 0, 0)
-        q = Quaternion()
-        q.x = q_list[0]
-        q.y = q_list[1]
-        q.z = q_list[2]
-        q.w = q_list[3]
-
-        for i in range(self.per_gen):
-            current_chrom = self.chroms[i]
-            print("chrom " + str(i)+ " is "+str(self.chroms[i]))
-            reward = 0
-
-
-            ball = [1, 0, 0]
-            rospy.sleep(0.01)
-            p = Pose(position=Point(x=ball[0], y=ball[1], z=ball[2]), orientation=q)
-            t = Twist(linear=Vector3(current_chrom[0]*0.2*0.2,0,0), angular=Vector3(0,0,0))
-            model_state = ModelState(model_name='lane_0_ball', pose=p, twist=t)
-            model_state.reference_frame = "world"
-            print("calling run")
-            node = GazeboTools(0)
-            parameters = {
-              "robot_speed": current_chrom[0]*0.2*0.2,
-              "robot_time": current_chrom[1]*0.2*0.2
-            }
-            reward = node.run(parameters)
-            rospy.sleep(0.5)
-
-            print("fininshed chrom " + str(i))
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            for j in range(self.per_gen // 10):
+                futures = []
+                for i in range(10):
+                    futures.append(executor.submit(self.run_chrom, chrom=self.chroms[j*10 + i], lane=i))
+                for future in concurrent.futures.as_completed(futures):
+                    reward, lane = future.result()
+                    print("lane ", lane, "got", reward, "points")
 
     def run(self):
         print("running")

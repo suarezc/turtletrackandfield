@@ -6,17 +6,16 @@ from geometry_msgs.msg import Pose, Twist, Point, Quaternion, Vector3
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 from striker import Striker
 
+import time
+
 class GazeboTools(object):
 
   def __init__(self, lane_number):
     self.lane = lane_number
     self.initialized = False
-    # dont call this I guess?
-    # rospy.init_node(f"reset_lane_{self.lane}")
 
     self.set_model_state = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=1000)
     self.model_state_sub = rospy.Subscriber("/gazebo/model_states", ModelStates, self.model_states_received)
-    self.cmd_vel_pub = rospy.Publisher("/robot0/cmd_vel", Twist, queue_size=10)
 
     y_offset = 2 * self.lane
   
@@ -35,12 +34,9 @@ class GazeboTools(object):
           f"lane_{self.lane}_robot": [0, y_offset, 0]
         }
     self.pin_states = {}
-    self.current_numbered_blocks_locations = None
     self.reward = 0
     self.reset_clock_running = False
     self.please_reset = False
-    rospy.sleep(1)
-  
     self.initialized = True
 
   def model_states_received(self, data):
@@ -65,18 +61,6 @@ class GazeboTools(object):
       if self.pin_states[pin]:
         reward += 1
     self.reward = reward
-    if abs(robot_pose.x - 0) > 0.00000001 and abs(robot_pose.y - 2 * self.lane) > 0.00000001:
-      if self.reset_clock_running:
-        t1 = rospy.Time.now().to_sec()
-        if t1 - self.t0 > 5:
-          self.reset_clock_running = False
-          self.please_reset = True
-          self.reward = 0
-      else:
-        print("reset clock started")
-        self.t0 = rospy.Time.now().to_sec()
-        self.reset_clock_running = True
-
 
   def reset_world(self):
     q_list = quaternion_from_euler(0, 0, 0)
@@ -95,22 +79,17 @@ class GazeboTools(object):
       self.set_model_state.publish(model_state)
 
   def run(self, parameters):
-    rospy.sleep(1)
     bot = Striker(self.lane)
-    bot.bowl(parameters["robot_speed"], abs(parameters["robot_time"]))
+    rospy.sleep(1)
+    start_time = rospy.Time.now().to_sec()
+    bot.bowl(parameters["robot_speed"], min(abs(parameters["robot_time"]), 7))
     r = rospy.Rate(5)
     while not rospy.is_shutdown():
-      if self.please_reset:
-        print("time to reset")
-        self.please_reset = False
-        self.reset_clock_running = False
+      if rospy.Time.now().to_sec() - start_time > 7:
         current_reward = self.reward
-        self.reset_world()
-        print("done resetting! reward is " + str(current_reward))
+        for i in range(5):
+            self.reset_world()
+            bot.stop()
+            rospy.sleep(0.01)
         return current_reward
       r.sleep()
-
-if __name__=="__main__":
-    print("started main")
-    node = GazeboTools(1)
-    node.run()

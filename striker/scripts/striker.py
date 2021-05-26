@@ -6,6 +6,7 @@ import numpy as np
 import moveit_commander
 import os
 import sys
+import time
 
 path_prefix = os.path.dirname(__file__) + "/action_states/"
 
@@ -17,7 +18,7 @@ class Striker(object):
         self.state = ""
 
         # Set up subscribers and publishers
-        self.lidar_sub = rospy.Subscriber('scan', LaserScan, self.lidar_callback)
+        # self.lidar_sub = rospy.Subscriber('scan', LaserScan, self.lidar_callback)
         self.cmd_vel_pub = rospy.Publisher(f'/robot{lane_number}/cmd_vel',
                 Twist, queue_size=1)
 

@@ -35,4 +35,53 @@
 
     <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_2_robot -x $(arg x_pos) -y 4 -z $(arg z_pos) -param robot_description" />
   </group>
+  
+  <group ns="robot3">
+    <param name="tf_prefix" value="robot3_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_3_robot -x $(arg x_pos) -y 6 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot4">
+    <param name="tf_prefix" value="robot4_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_4_robot -x $(arg x_pos) -y 8 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot5">
+    <param name="tf_prefix" value="robot5_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_5_robot -x $(arg x_pos) -y 10 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot6">
+    <param name="tf_prefix" value="robot6_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_6_robot -x $(arg x_pos) -y 12 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot7">
+    <param name="tf_prefix" value="robot7_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_7_robot -x $(arg x_pos) -y 14 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot8">
+    <param name="tf_prefix" value="robot8_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_8_robot -x $(arg x_pos) -y 16 -z $(arg z_pos) -param robot_description" />
+  </group>
+  
+  <group ns="robot9">
+    <param name="tf_prefix" value="robot9_tf" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model lane_9_robot -x $(arg x_pos) -y 18 -z $(arg z_pos) -param robot_description" />
+  </group>
   </launch>

@@ -48,7 +48,7 @@ template_end = """
 
 world = template_start
 
-for i in range(3):
+for i in range(10):
   y_offset = i*2 
   lane_name = f"lane_{i}"
   lane = f"""
