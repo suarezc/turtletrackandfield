@@ -38,9 +38,19 @@ class GazeboTools(object):
     self.reset_clock_running = False
     self.please_reset = False
     self.initialized = True
+    self.counter = 0
 
   def model_states_received(self, data):
     robot_pose = None
+
+    # Only run this every 100 times bc
+    # I think it gets kinda slow, and starts
+    # reporting a score of 0 too much
+    self.counter += 1
+    if self.counter % 100 != 0:
+      return
+    self.counter = 0
+
     for pin_name, pose in self.pins.items():
       if f"lane_{self.lane}" not in pin_name:
         continue
@@ -81,6 +91,9 @@ class GazeboTools(object):
   def run(self, parameters):
     bot = Striker(self.lane)
     rospy.sleep(1)
+    # Extra reset just to make sure the bot is really stopped
+    bot.stop()
+    self.reset_world()
     start_time = rospy.Time.now().to_sec()
     bot.bowl(parameters["robot_speed"], min(abs(parameters["robot_time"]), 7))
     r = rospy.Rate(5)

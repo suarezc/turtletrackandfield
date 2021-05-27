@@ -14,6 +14,7 @@ from reset import GazeboTools
 import concurrent.futures
 
 from random import random
+from datetime import datetime
 
 class Genetic(object):
 
@@ -80,7 +81,10 @@ class Genetic(object):
 
     def run(self):
         print("running")
+        t_start = datetime.now()
         self.test_gen()
+        t_end = datetime.now()
+        print(t_end - t_start)
         print("gen tested")
         #determine survivors
         #pair parentS
