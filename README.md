@@ -22,5 +22,17 @@ Final Project for CMSC 20900
 
 ## Challenges, Future Work, and Takeaways
   ## Future Work
-    * Build a bowling simulator that incorporates more parameters
-    * Build a more sens
+   * Build a bowling simulator that incorporates more parameters:
+   * Build a Genetic Algorithm that converges faster, try new techniques and parameter ranges:
+   * Build a more complicated bowling lane that tests our algorithm further:
+
+ ## Challenges
+   * Gazebo struggles with continuous resets, it introduces errors that our algorithm could not account for. The robot would bowl at different angles even though it was placed directly in front of the ball every time. No matter our algorithm implementation reward would fall to zero because the lanes just get messier and messier. This would prove to be consistently frustrating.
+   * People on the team had issues with their NoMachine at various points throughout the final project.
+   * Real training takes far too long for our algorithm to converge on something acceptable, this is why simulated training was necessary.
+   * We did not expect the sheer size of design choices that were possible when making a genetic algorithm. Everything from generation size and count, to the randomness in mutating and crossover, to the techniques used, to how we measure reward were all up for discussion. Discovering the appropriate degree of randomness and what ranges were acceptable given what values we were toying with took a significant amount of time. By the time we found something that would converge, modifying it further seemed reckless.
+
+## Takeaways
+ * Gazebo is a harsh mistress, there will be errors and deviations that will be almost impossible to find unless you run your code for a sufficiently long period of time.
+ * Genetic Algorithms are more of an art than a science, their modularity and customizability allows custom solutions for particular workloads, but also introduce sources of randomness that can make converging more difficult if it is not properly tuned. What "properly tuned" means is up for debate, further complicating the issue.
+ * 
