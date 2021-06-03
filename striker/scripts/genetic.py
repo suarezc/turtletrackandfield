@@ -239,6 +239,12 @@ class Genetic(object):
                 avg_reward += chrom[-1]
             
             print(avg_speed/self.per_gen, avg_time/self.per_gen, avg_reward/self.per_gen)
+            f = open('record.txt','a')
+            f.write("speed: " + str(avg_speed/self.per_gen) + " time: " + str(avg_time/self.per_gen) + ' reward: ' + str(avg_reward/self.per_gen) + '\n')
+            f.close()
+
+
+
 
             self.sort_and_process_chroms()
             self.keep = []
