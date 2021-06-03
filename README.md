@@ -26,11 +26,10 @@ Final Project for CMSC 20900
  * Keep: Initially our 25% highest performing chromosomes were kept for the next generation without any modifications. Our final iteration would not have any algorithms kept, they would all be available for crossover.
  * Crossover: We tried an initial version of crossover where we selected the middle 50% chromosomes to be paired with each other with equal probability. This worked however it converged slowly, our final iteration made everybody available for crossover and weighed their likelihood of getting chosen to crossover and contribute to the next generation equal to their reward/total reward  for that generation. This meant more fit parents could be chosen more than once.
  * Mutation: Initially we had the poorest performing 25% of our chromosomes be randomly mutated to introduce new genes into the pool and hopefully stumble across a more fit chromosome. Our final algorithm dropped mutation entirely in favor of the more comprehensive crossover described above.
-    * Iterating through the Algorithm: Over time we experimented with multiple generation sizes and number of generations, as well as different techniques for mutation and crossover. We determined that generation size was more important than the number of generations, and this understanding coupled with our struggles with Gazebo was the main impetus for introducing a simulated version of the algorithm that we could test and iterate through faster.
+ * Iterating through the Algorithm: Over time we experimented with multiple generation sizes and number of generations, as well as different techniques for mutation and crossover. We determined that generation size was more important than the number of generations, and this understanding coupled with our struggles with Gazebo was the main impetus for introducing a simulated version of the algorithm that we could test and iterate through faster.
 
 
 
-## Challenges, Future Work, and Takeaways
   ## Future Work
    * Build a bowling simulator that incorporates more parameters: We could design angle of approach, number of pins in the lane and other variations that could make a more interesting challenge.
    * Build a Genetic Algorithm that converges faster, try new techniques and parameter ranges: 
