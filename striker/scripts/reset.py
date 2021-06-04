@@ -51,7 +51,7 @@ class GazeboTools(object):
       return
     self.counter = 0
 
-    for pin_name, pose in self.pins.items():
+    for pin_name, pose in self.pins.items(): #Check each pin to see if it is knocked over
       if f"lane_{self.lane}" not in pin_name:
         continue
       block_idx = data.name.index(pin_name)
@@ -67,12 +67,12 @@ class GazeboTools(object):
         knocked_down = abs(roll) > 0.4 or abs(pitch) > 0.4
         self.pin_states[pin_name] = knocked_down
     reward = 0
-    for pin in self.pin_states:
+    for pin in self.pin_states: #If it is knocked over add to the reward
       if self.pin_states[pin]:
         reward += 1
     self.reward = reward
 
-  def reset_world(self):
+  def reset_world(self): #function to put all the pins and robot back into their original positions
     q_list = quaternion_from_euler(0, 0, 0)
     q = Quaternion()
     q.x = q_list[0]
@@ -80,7 +80,7 @@ class GazeboTools(object):
     q.z = q_list[2]
     q.w = q_list[3]
 
-    for pin in self.pins:
+    for pin in self.pins: #publish a model state for each object in Gazebo
       rospy.sleep(0.01)
       p = Pose(position=Point(x=self.pins[pin][0], y=self.pins[pin][1], z=self.pins[pin][2]), orientation=q)
       t = Twist(linear=Vector3(0,0,0), angular=Vector3(0,0,0))
