@@ -146,12 +146,12 @@ class Genetic(object):
                     reward, lane = future.result()
                     self.chroms[j*10 + lane][-1] = reward
 
-    #Method where chromosomes were chosen to be kept, mutated or bred. Final iteratoin has them all being bred
+    #Method where chromosomes were chosen to be kept, mutated or bred. Final iteration has them all being bred
     def sort_and_process_chroms(self):
        
         #array for parents
         self.parents = self.chroms
-        #used to use mutation method as weell but simple crossover proved to bbe superior
+        #used to use mutation method as weell but simple crossover proved to be superior
         self.linear_crossover()
 
         #new chroms are assigned
@@ -160,7 +160,7 @@ class Genetic(object):
         return
 
 
-    #Statistics are calulated and printed here on a per generation basis as well as the running of the  generations
+    #Statistics are calculated and printed here on a per generation basis as well as the running of the generations
     def run(self):
         while not rospy.is_shutdown() and self.gens != 0:            
             print("running " + str(self.gens))
@@ -194,8 +194,10 @@ class Genetic(object):
             for chrom in self.chroms:
                 chrom[-1] = -1
 
+            #generation is complete, decrement counter
             self.gens -= 1
 
+#Main method, declare and run nodes here
 if __name__ == "__main__":
     rospy.init_node("genetic")
     gen = Genetic()
