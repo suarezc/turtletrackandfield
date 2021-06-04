@@ -11,6 +11,8 @@ Final Project for CMSC 20900
 
 ![Baby Bowlers](/early_bowling.gif)
 
+![Training Montage](/algo.gif)
+
 ![Better Bowlers](/bowling.gif)
 
 ## System Architecture
