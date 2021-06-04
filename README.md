@@ -32,9 +32,9 @@ Final Project for CMSC 20900
 
   ## Future Work
    * Build a bowling simulator that incorporates more parameters: We could design angle of approach, number of pins in the lane and other variations that could make a more interesting challenge.
-   * Build a Genetic Algorithm that converges faster, try new techniques and parameter ranges: 
-   * Build a more complicated bowling lane that tests our algorithm further:
-   * Explore other alternatives to simulating bowling than gazebo, as well as exploring different weights of the pins and balls as parameters to be experimented with and optimized for. 
+   * Build a Genetic Algorithm that converges faster, try new techniques and parameter ranges. We could have experimented ad nauseum with all the possibilities and probabilities involed in choosing a genetic algorithm. Generalized algorithms certainly exist, but they could be specially built as well for particular lanes or number of pins.
+   * Build a more complicated bowling lane that tests our algorithm further. We could have built longer lanes, added more pins, added obstacles the robot would have to bowl around. We could have oriented pins in different shapes instead of the typical triangle.
+   * Explore other alternatives to simulating bowling than gazebo, as well as exploring different weights of the pins and balls as parameters to be experimented with and optimized for. Since we modified the inertial properties of the objects for this simulation, we could have continued to explore those properties as they pertained to the ball or perhaps even the robot. The bowling lane floor is more slippery than the surrounding floor in real life.
 
  ## Challenges
    * In the gazebo and parallelization portion of the project, we found that the model objects would not reset properly unless multiple commands to reset were published. The pins would often still have velocity after being reset, such that they would sway or fall over. Dealing with the lag of gazebo once we started parallelizing things, and navigating the gazebo real time factor to find the ideal number of lanes to run was also a challenge. We also tried running Gazebo in headless mode to improve performance, but saw no improvement.   	
