@@ -5,10 +5,13 @@ Final Project for CMSC 20900
 ## Project Description
 
 * Goal: For this project we aimed to build a robot that could improve it's bowling in our simulated lane through the use of a genetic algorithm. We were able to build a system for training robots to improve their score in bowling by combining our main components into one system. We developed an implementation of bowling in the Gazebo world for which we parameterized certain variables we wished to optimize with our algorithm. The system is built for testing multiple chromosomes at once so we are able to build a genetic algorithm that takes advantage of this parallelization to produce a satisfactory result.
-  * Bowling for Robots: The robots bowl in custom built lanes with 10 pins and a ball in front of them. They will push the ball given parameters set by the genetic algorithm. The pins will be measured to see how many were knocked down and this score will be reported as a reward for that set of parameters. (picture of lanes)
-  * Parallelizing Training: We gave each lane and robot their own number for gazebo models so we set them independently. We used python’s thread functionality to run the robots in their own lane and record this score. We trained our generations 10 robots at a time. (gif of restart)
-  * Training with our Genetic Algorithm: Because we faced issues with Gazebo and the speed of training, we settled on simulating training for most of the process and only brought in the real robots when we approached a solution. This saved time and prevented Gazebo oddities from interfering with the training. (gif of robot bowling poorly then robot bowling better)
+  * Bowling for Robots: The robots bowl in custom built lanes with 10 pins and a ball in front of them. They will push the ball given parameters set by the genetic algorithm. The pins will be measured to see how many were knocked down and this score will be reported as a reward for that set of parameters.
+  * Parallelizing Training: We gave each lane and robot their own number for gazebo models so we set them independently. We used python’s thread functionality to run the robots in their own lane and record this score. We trained our generations 10 robots at a time.
+  * Training with our Genetic Algorithm: Because we faced issues with Gazebo and the speed of training, we settled on simulating training for most of the process and only brought in the real robots when we approached a solution. This saved time and prevented Gazebo oddities from interfering with the training.
 
+![Baby Bowlers](/early_bowling.gif)
+
+![Better Bowlers](/bowling.gif)
 
 ## System Architecture
 
