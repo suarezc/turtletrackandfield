@@ -35,12 +35,13 @@ class GazeboTools(object):
         }
     self.pin_states = {}
     self.reward = 0
-    self.reset_clock_running = False
-    self.please_reset = False
     self.initialized = True
     self.counter = 0
 
   def model_states_received(self, data):
+    """
+    Update score based on pin states
+    """
     robot_pose = None
 
     # Only run this every 100 times bc
@@ -101,6 +102,7 @@ class GazeboTools(object):
       if rospy.Time.now().to_sec() - start_time > 7:
         current_reward = self.reward
         for i in range(5):
+            # Reset 5 times because of Gazebo
             self.reset_world()
             bot.stop()
             rospy.sleep(0.01)
