@@ -21,46 +21,30 @@ from datetime import datetime
   
 class Genetic(object):
 
-    def __init__(self, count=200, gens=60):
+    def __init__(self, count=200, gens=100):
+
+        #initialize the chromosomes and the starting range of values
         self.per_gen = count
         self.gens = gens
         self.chrom_len = 5
-        self.crossover_rate = 0
-        self.mutation_rate = 0
-        self.vel_start_min = 2
-        self.vel_start_range = 4
-        self.time_range = 7
-        self.ang_start_range = 20
-        self.position_start_range = 20
-        self.keep =  []#higest 25
+        self.vel_start_min = 4
+        self.vel_start_range = 7
+        self.time_range = 6
         self.parents = [] #middle 50
-        self.mutation_only = [] #lowest 25
-        #in the future, convert newtons to robot velocity
-
-        #min starting vel: 50
-        #max starting vel: 150
-
-        #position: who fucking knows
-
-        #angle: +- 20
-
 
         self.chroms = []
         for i in range(self.per_gen):
             self.chroms.append([random.random()*self.vel_start_range+self.vel_start_min, #velocity
                                 random.random()*self.time_range, #time
-                                random.random()*self.ang_start_range*2-self.ang_start_range, #angle
-                                random.random()*self.position_start_range*2-self.position_start_range, #y position
                                 -1]) #reward always last index
-            # TODO: consider making list of chroms a list of dictionaries instead of a list of lists
-
 
         self.set_model_state = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=60)
-
         return
 
-    #Does not use crossover_rate
+
     def linear_crossover(self):
+
+        #randomly distribute parents amd prepare for weighting
         random.shuffle(self.parents)
         length = len(self.parents)//2
         chrom_len = len(self.parents[0])
@@ -68,39 +52,49 @@ class Genetic(object):
         weights = []
         temp_parents = []
 
+        #find total value of rewards
         for i in range(len(self.parents)):
             tot_weight += self.parents[i][-1]
         
+        #associate each chromosome with its proportion of the total reward
         for i in range(len(self.parents)):
             weights.append(self.parents[i][-1]/tot_weight)
 
+        #choose parents randomly based on their weighting and then apply our crossover technique
         for i in range(length):
 
+            #weights are kept tight so that there is a limited amount of drift per generation
             weight_one = random.uniform(0.9, 1.1)
             weight_two = random.uniform(0.9, 1.1)
+            #parents are chosen here
             index = np.random.choice([i for i in range(len(weights))], 2, p = weights, replace=False)
             parent_one, parent_two = self.parents[index[0]], self.parents[index[1]]
 
-
+            #Two children are produced from every pair of parents, they will be in the next generation
+            #Our weights are applied to every aspect of the chromosome, changing reward does not matter since this will only trigger after they have been tested
             child_one = [parent_one[j]*weight_one + parent_two[j]*(1-weight_one) for j in range(chrom_len)]
             child_two = [parent_one[j]*weight_two + parent_two[j]*(1-weight_two) for j in range(chrom_len)]
+
             temp_parents.append(child_one)
             temp_parents.append(child_two)
         
+        #parents die off, children are the future
         self.parents = temp_parents
 
         return
 
-    #does not use mutation_rate
-    def scalar_mutate(self):
-        chrom_len = len(self.mutation_only[0])
+    #vestigial code from our mutation experiments
+    # def scalar_mutate(self):
+    #     chrom_len = len(self.mutation_only[0])
 
-        for i, chrom in enumerate(self.mutation_only):
-            mutant = [self.mutation_only[i][j] * (random.random() + .5) for j in range(chrom_len)]
-            self.mutation_only[i] = mutant
+    #     for i, chrom in enumerate(self.mutation_only):
+    #         mutant = [self.mutation_only[i][j] * (random.random() + .5) for j in range(chrom_len)]
+    #         self.mutation_only[i] = mutant
     
-        return
+    #     return
 
+
+    #Our robot bowl function. This plugs into the reset and striker code in order to move the bots in gazebo
     def run_chrom(self, chrom, lane):
         node = GazeboTools(lane)
         parameters = {
@@ -110,122 +104,73 @@ class Genetic(object):
         reward = node.run(parameters)
         return reward, lane
 
+    #Our simulated function for reward generatoin
     def run_sim_chrom(self, chrom, lane):
         node = GazeboTools(lane)
-        ideal_speed = 10
-        ideal_time = 7
+
+        #These are parameters we tested and believe will create good bowlers
+        ideal_speed = 3.5
+        ideal_time = 1.5
         parameters = {
           "robot_speed": chrom[0],
           "robot_time": chrom[1]
         }
+
+        #Reward functions are designed such that overshooting and undershooting are penalized equally. Bigger is not always better here
         speed_reward = 1 - min((1/8 * abs(chrom[0] - ideal_speed)), 1)
         time_reward = 1 - min((1/8 * abs(chrom[1] - ideal_time)), 1)
+
+        #Reward is min 0 and max 2, the reward is the simple addition of the two components
         reward = speed_reward + time_reward
         return reward, lane
 
+    #Test our robots using their own threads
     def test_gen(self):
+        #Python built in thread manager
         with concurrent.futures.ThreadPoolExecutor() as executor:
+            #Test ten robots at a time
             for j in range(self.per_gen // 10):
                 futures = []
+
                 for i in range(10):
-                    futures.append(executor.submit(self.run_sim_chrom, chrom=self.chroms[j*10 + i], lane=i))
+                    #if first or last gen, let the robots actually bowl
+                    if self.gens == 1 or self.gens == 100:
+                        futures.append(executor.submit(self.run_chrom, chrom=self.chroms[j*10 + i], lane=i))
+
+                    #otherwise use our sim function for speedier testing
+                    else:
+                        futures.append(executor.submit(self.run_sim_chrom, chrom=self.chroms[j*10 + i], lane=i))
+
+                #save reward for processing down the line, reward is always the final index
                 for future in concurrent.futures.as_completed(futures):
                     reward, lane = future.result()
                     self.chroms[j*10 + lane][-1] = reward
-                    #print("lane ", lane, "got", reward, "points")
 
+    #Method where chromosomes were chosen to be kept, mutated or bred. Final iteratoin has them all being bred
     def sort_and_process_chroms(self):
-        self.chroms.sort(key = lambda reward: reward[-1])
        
-        # for i, chrom in enumerate(self.chroms):
-        #     if i < self.per_gen * .25:
-        #         self.mutation_only.append(chrom)
-        #     elif i >= self.per_gen * .75:
-        #         self.keep.append(chrom)
-        #     else:
-        #         self.parents.append(chrom)
-
+        #array for parents
         self.parents = self.chroms
-        
-        # avg_speed, avg_time, avg_reward = 0, 0, 0
-        # print("Keep before")
-        # for chrom in self.keep:
-        #     avg_speed += chrom[0]
-        #     avg_time += chrom[1]
-        #     avg_reward += chrom[-1]
-            
-        # print(avg_speed/self.per_gen * .25, avg_time/self.per_gen * .25, avg_reward/self.per_gen * .25)
-
-        # avg_speed, avg_time, avg_reward = 0, 0, 0
-        # print("mutate before")
-        # for chrom in self.mutation_only:
-        #     avg_speed += chrom[0]
-        #     avg_time += chrom[1]
-        #     avg_reward += chrom[-1]
-            
-        # print(avg_speed/self.per_gen * .25, avg_time/self.per_gen * .25, avg_reward/self.per_gen * .25)
-
-        # avg_speed, avg_time, avg_reward = 0, 0, 0
-        # print("parents before")
-        # for chrom in self.parents:
-        #     avg_speed += chrom[0]
-        #     avg_time += chrom[1]
-        #     avg_reward += chrom[-1]
-            
-        # print(avg_speed/self.per_gen * .5, avg_time/self.per_gen * .5, avg_reward/self.per_gen * .5)
-        
-
+        #used to use mutation method as weell but simple crossover proved to bbe superior
         self.linear_crossover()
-        #self.scalar_mutate()
 
-
-        # avg_speed, avg_time, avg_reward = 0, 0, 0
-        # print("Keep after")
-        # for chrom in self.keep:
-        #     avg_speed += chrom[0]
-        #     avg_time += chrom[1]
-        #     avg_reward += chrom[-1]
-            
-        # print(avg_speed/self.per_gen * .25, avg_time/self.per_gen * .25, avg_reward/self.per_gen * .25)
-
-        # avg_speed, avg_time, avg_reward = 0, 0, 0
-        # print("mutate after")
-        # for chrom in self.mutation_only:
-        #     avg_speed += chrom[0]
-        #     avg_time += chrom[1]
-        #     avg_reward += chrom[-1]
-            
-        # print(avg_speed/self.per_gen * .25, avg_time/self.per_gen * .25, avg_reward/self.per_gen * .25)
-
-        # avg_speed, avg_time, avg_reward = 0, 0, 0
-        # print("parents after")
-        # for chrom in self.parents:
-        #     avg_speed += chrom[0]
-        #     avg_time += chrom[1]
-        #     avg_reward += chrom[-1]
-            
-        # print(avg_speed/self.per_gen * .5, avg_time/self.per_gen * .5, avg_reward/self.per_gen * .5)
-
-        print("keep length", len(self.keep))
-        print("parents length", len(self.parents))
-        print("mutation length", len(self.mutation_only))
-
-        self.chroms =  self.keep + self.parents + self.mutation_only
-        print("chroms length", len(self.chroms))
-
-        #reset reward
-        for chrom in self.chroms:
-            chrom[-1] = -1
+        #new chroms are assigned
+        self.chroms = self.parents
 
         return
 
 
+    #Statistics are calulated and printed here on a per generation basis as well as the running of the  generations
     def run(self):
         while not rospy.is_shutdown() and self.gens != 0:            
             print("running " + str(self.gens))
             t_start = datetime.now()
-            self.test_gen() #done
+
+            #call the function that will run real or simulated bowling
+            self.test_gen()
+
             t_end = datetime.now()
+            #Get generation test timing.
             print(t_end - t_start)
             print("gen tested")
             print("gen stats")
@@ -238,28 +183,18 @@ class Genetic(object):
                 avg_time += chrom[1]
                 avg_reward += chrom[-1]
             
+            #print average stats for the generation for sanity checking
             print(avg_speed/self.per_gen, avg_time/self.per_gen, avg_reward/self.per_gen)
-            f = open('record.txt','a')
-            f.write("speed: " + str(avg_speed/self.per_gen) + " time: " + str(avg_time/self.per_gen) + ' reward: ' + str(avg_reward/self.per_gen) + '\n')
-            f.close()
-
-
-
 
             self.sort_and_process_chroms()
-            self.keep = []
             self.parents = []
-            self.mutation_only = []
+
+
+            #reset reward
+            for chrom in self.chroms:
+                chrom[-1] = -1
 
             self.gens -= 1
-
-        #determine survivors # score-based
-        #pair parents #random
-        #self.crossover() #CHANCE
-        #self.mutuate() #CHANCE
-        #reset rewards
-        #test again
-
 
 if __name__ == "__main__":
     rospy.init_node("genetic")
